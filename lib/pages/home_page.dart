@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ram_app/components/character_card.dart';
+import 'package:ram_app/components/character_card_skeleton.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -16,15 +17,17 @@ class HomePage extends StatelessWidget {
         future: getAll(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: Text("Cargando..."));
+            return ListView.builder(
+              itemCount: 3,
+              padding: const EdgeInsets.all(10),
+              itemBuilder: (context, index) => CharacterCardSkeleton(),
+            );
           }
 
           final characters = snapshot.data!;
-          return Center(
-            child: ListView(
-              padding: const EdgeInsets.all(10),
-              children: [...characters.map((c) => CharacterCard(c))],
-            ),
+          return ListView(
+            padding: const EdgeInsets.all(10),
+            children: [...characters.map((c) => CharacterCard(c))],
           );
         },
       ),
