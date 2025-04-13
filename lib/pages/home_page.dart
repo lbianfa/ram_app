@@ -12,26 +12,27 @@ class HomePage extends StatelessWidget {
         title: Text("Rick & Morty"),
       ),
       backgroundColor: Theme.of(context).colorScheme.primary,
-      body: Center(
-        child: ListView(
-          padding: const EdgeInsets.all(10),
-          children: [
-            CharacterCard("Mi primer personaje"),
-            CharacterCard("Mi primer personaje"),
-            CharacterCard("Mi primer personaje"),
-            CharacterCard("Mi primer personaje"),
-            CharacterCard("Mi primer personaje"),
-            CharacterCard("Mi primer personaje"),
-            CharacterCard("Mi primer personaje"),
-            CharacterCard("Mi primer personaje"),
-            CharacterCard("Mi primer personaje"),
-            CharacterCard("Mi primer personaje"),
-            CharacterCard("Mi primer personaje"),
-            CharacterCard("Mi primer personaje"),
-            CharacterCard("Mi primer personaje"),
-          ],
-        ),
+      body: FutureBuilder(
+        future: getAll(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: Text("Cargando..."));
+          }
+
+          final characters = snapshot.data!;
+          return Center(
+            child: ListView(
+              padding: const EdgeInsets.all(10),
+              children: [...characters.map((c) => CharacterCard(c))],
+            ),
+          );
+        },
       ),
     );
+  }
+
+  Future<List<String>> getAll() async {
+    await Future.delayed(Duration(seconds: 3));
+    return ["Rick", "Morty", "Summer"];
   }
 }
