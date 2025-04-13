@@ -13,9 +13,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       routerConfig: appRouter,
-      title: 'Ricky & Morty App',
+      title: 'Rick & Morty',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFF202329)),
+        colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFF1B263B)),
       ),
     );
   }

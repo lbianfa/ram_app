@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ram_app/components/character_card.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -6,19 +7,28 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(backgroundColor: Theme.of(context).colorScheme.primary),
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        title: Text("Rick & Morty"),
+      ),
+      backgroundColor: Theme.of(context).colorScheme.primary,
       body: Center(
-        child: Column(
+        child: ListView(
+          padding: const EdgeInsets.all(10),
           children: [
-            Text(
-              "Aplicación de Ricky & Morty",
-              style: Theme.of(context).textTheme.headlineSmall,
-            ),
-            ElevatedButton(
-              onPressed: () {},
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.amber),
-              child: Text("Navegar segunda pagina"),
-            ),
+            CharacterCard("Mi primer personaje"),
+            CharacterCard("Mi primer personaje"),
+            CharacterCard("Mi primer personaje"),
+            CharacterCard("Mi primer personaje"),
+            CharacterCard("Mi primer personaje"),
+            CharacterCard("Mi primer personaje"),
+            CharacterCard("Mi primer personaje"),
+            CharacterCard("Mi primer personaje"),
+            CharacterCard("Mi primer personaje"),
+            CharacterCard("Mi primer personaje"),
+            CharacterCard("Mi primer personaje"),
+            CharacterCard("Mi primer personaje"),
+            CharacterCard("Mi primer personaje"),
           ],
         ),
       ),
