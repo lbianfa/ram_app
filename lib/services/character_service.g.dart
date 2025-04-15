@@ -6,6 +6,25 @@ part of 'character_service.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+String _$getCharactersHash() => r'393168d5405eca1839090127000bcbe04bdc2153';
+
+/// See also [getCharacters].
+@ProviderFor(getCharacters)
+final getCharactersProvider =
+    AutoDisposeFutureProvider<List<Character>>.internal(
+      getCharacters,
+      name: r'getCharactersProvider',
+      debugGetCreateSourceHash:
+          const bool.fromEnvironment('dart.vm.product')
+              ? null
+              : _$getCharactersHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef GetCharactersRef = AutoDisposeFutureProviderRef<List<Character>>;
 String _$getCharacterHash() => r'0642c271c776db7d1a877df732792258c974e0bf';
 
 /// See also [getCharacter].

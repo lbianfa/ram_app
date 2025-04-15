@@ -7,6 +7,17 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'character_service.g.dart';
 
 @riverpod
+Future<List<Character>> getCharacters(Ref ref) async {
+  final apiClient = ref.watch(apiClientProvider);
+
+  final response = await apiClient.get(Endpoints.characters);
+
+  final List<dynamic> results = response.data["results"];
+
+  return results.map((json) => Character.fromJson(json)).toList();
+}
+
+@riverpod
 Future<Character> getCharacter(Ref ref) async {
   final apiClient = ref.watch(apiClientProvider);
 

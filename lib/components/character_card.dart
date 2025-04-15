@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:ram_app/models/character/character.dart';
 
 class CharacterCard extends StatelessWidget {
-  final String name;
+  final Character character;
 
-  const CharacterCard(this.name, {super.key});
+  const CharacterCard(this.character, {super.key});
 
   @override
   Widget build(BuildContext context) {
+    final bool isLive = character.status == "Alive";
+
     return Card(
       elevation: 4,
+      clipBehavior: Clip.hardEdge,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       color: Color.fromARGB(255, 51, 59, 83),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.network(
-            "https://rickandmortyapi.com/api/character/avatar/10.jpeg",
-            width: 170,
-          ),
+          Image.network(character.image, width: 170),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.fromLTRB(10, 15, 10, 10),
@@ -26,10 +27,11 @@ class CharacterCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    name,
+                    character.name,
                     style: Theme.of(
                       context,
                     ).textTheme.headlineSmall?.copyWith(color: Colors.white),
+                    overflow: TextOverflow.ellipsis,
                   ),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,11 +43,11 @@ class CharacterCard extends StatelessWidget {
                         margin: const EdgeInsets.only(top: 3),
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: Colors.red,
+                          color: isLive ? Colors.green : Colors.red,
                         ),
                       ),
                       Text(
-                        "Muerto",
+                        isLive ? "Vivo" : "Muerto",
                         style: Theme.of(
                           context,
                         ).textTheme.titleMedium?.copyWith(
@@ -64,10 +66,11 @@ class CharacterCard extends StatelessWidget {
                     overflow: TextOverflow.visible,
                   ),
                   Text(
-                    "Worldender's lair",
+                    character.location.name,
                     style: Theme.of(
                       context,
                     ).textTheme.titleMedium?.copyWith(color: Colors.white),
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ],
               ),
