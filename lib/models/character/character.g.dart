@@ -14,8 +14,7 @@ _Character _$CharacterFromJson(Map<String, dynamic> json) => _Character(
   type: json['type'] as String,
   gender: json['gender'] as String,
   image: json['image'] as String,
-  origin: json['origin'] as String,
-  location: json['location'] as String,
+  location: LocationInfo.fromJson(json['location'] as Map<String, dynamic>),
 );
 
 Map<String, dynamic> _$CharacterToJson(_Character instance) =>
@@ -27,6 +26,11 @@ Map<String, dynamic> _$CharacterToJson(_Character instance) =>
       'type': instance.type,
       'gender': instance.gender,
       'image': instance.image,
-      'origin': instance.origin,
       'location': instance.location,
     };
+
+_LocationInfo _$LocationInfoFromJson(Map<String, dynamic> json) =>
+    _LocationInfo(name: json['name'] as String);
+
+Map<String, dynamic> _$LocationInfoToJson(_LocationInfo instance) =>
+    <String, dynamic>{'name': instance.name};
