@@ -11,8 +11,8 @@ class CharactersPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final AsyncValue<List<Character>> getCharacters = ref.watch(
-      getCharactersProvider,
+    final AsyncValue<List<Character>> characters = ref.watch(
+      charactersProvider,
     );
 
     return Scaffold(
@@ -21,7 +21,7 @@ class CharactersPage extends ConsumerWidget {
         title: Text("Rick & Morty"),
       ),
       backgroundColor: Theme.of(context).colorScheme.primary,
-      body: switch (getCharacters) {
+      body: switch (characters) {
         AsyncData(:final value) => ListView(
           padding: const EdgeInsets.all(10),
           children: [...value.map((c) => CharacterCard(c))],
