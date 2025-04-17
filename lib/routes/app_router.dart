@@ -19,7 +19,7 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: "/create-character",
       name: 'create-character',
-      builder: (context, state) => const CharacterCreatorPage(),
+      builder: (context, state) => CharacterCreatorPage(),
     ),
   ],
 );

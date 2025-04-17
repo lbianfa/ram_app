@@ -27,4 +27,12 @@ class Characters extends _$Characters {
 
     return results.map((json) => Character.fromJson(json)).toList();
   }
+
+  Future<void> addCharacter() async {
+    await Future.delayed(Duration(seconds: 3));
+
+    ref.invalidateSelf();
+
+    await future;
+  }
 }

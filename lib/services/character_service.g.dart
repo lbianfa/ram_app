@@ -22,7 +22,7 @@ final getCharacterProvider = AutoDisposeFutureProvider<Character>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef GetCharacterRef = AutoDisposeFutureProviderRef<Character>;
-String _$charactersHash() => r'2335ce9589c9bf52991b1722b3517bd768756d85';
+String _$charactersHash() => r'5d2f42909a59cacfb427fcfc811b1be9c18926d0';
 
 /// See also [Characters].
 @ProviderFor(Characters)

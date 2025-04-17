@@ -24,7 +24,11 @@ class CharactersPage extends ConsumerWidget {
       body: switch (characters) {
         AsyncData(:final value) => ListView(
           padding: const EdgeInsets.all(10),
-          children: [...value.map((c) => CharacterCard(c))],
+          children: [
+            ...value.map(
+              (c) => CharacterCard(c, key: ValueKey("character${c.id}")),
+            ),
+          ],
         ),
         AsyncError() => const Text("Oops, algún error inesperado ocurrió"),
         _ => ListView.builder(
