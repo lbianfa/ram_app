@@ -6,11 +6,33 @@ import 'package:ram_app/components/character_card_skeleton.dart';
 import 'package:ram_app/models/character/character.dart';
 import 'package:ram_app/services/character_service.dart';
 
-class CharactersPage extends ConsumerWidget {
+class CharactersPage extends ConsumerStatefulWidget {
   const CharactersPage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ConsumerStatefulWidget> createState() {
+    return _CharactersPageState();
+  }
+}
+
+class _CharactersPageState extends ConsumerState<CharactersPage> {
+  final _scrollController = ScrollController();
+  bool _isLoading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_onScroll);
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final AsyncValue<List<Character>> characters = ref.watch(
       charactersProvider,
     );
@@ -22,13 +44,28 @@ class CharactersPage extends ConsumerWidget {
       ),
       backgroundColor: Theme.of(context).colorScheme.primary,
       body: switch (characters) {
-        AsyncData(:final value) => ListView(
-          padding: const EdgeInsets.all(10),
-          children: [
-            ...value.map(
-              (c) => CharacterCard(c, key: ValueKey("character${c.id}")),
-            ),
-          ],
+        AsyncData(:final value) => Padding(
+          padding: EdgeInsets.all(10),
+          child: ListView.builder(
+            controller: _scrollController,
+            itemCount: value.length + 1,
+            itemBuilder: (context, index) {
+              if (index < value.length) {
+                final c = value[index];
+                return CharacterCard(c, key: ValueKey("character${c.id}"));
+              } else if (_isLoading) {
+                // Loading indicator at bottom
+                return const Padding(
+                  padding: EdgeInsets.all(16),
+                  child: Center(
+                    child: CircularProgressIndicator(color: Colors.amberAccent),
+                  ),
+                );
+              }
+
+              return SizedBox(width: 10);
+            },
+          ),
         ),
         AsyncError() => const Text("Oops, algún error inesperado ocurrió"),
         _ => ListView.builder(
@@ -42,5 +79,22 @@ class CharactersPage extends ConsumerWidget {
         child: const Icon(Icons.add),
       ),
     );
+  }
+
+  void _onScroll() async {
+    if (_isLoading) return;
+
+    if (_scrollController.position.pixels >=
+        _scrollController.position.maxScrollExtent - 300) {
+      setState(() {
+        _isLoading = true;
+      });
+
+      await ref.read(charactersProvider.notifier).loadMore();
+
+      setState(() {
+        _isLoading = false;
+      });
+    }
   }
 }

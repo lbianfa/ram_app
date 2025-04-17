@@ -1,4 +1,3 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ram_app/models/character/character.dart';
 import 'package:ram_app/services/api/api_client.dart';
 import 'package:ram_app/services/api/endpoints.dart';
@@ -7,25 +6,41 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'character_service.g.dart';
 
 @riverpod
-Future<Character> getCharacter(Ref ref) async {
-  final apiClient = ref.watch(apiClientProvider);
-
-  final response = await apiClient.get('${Endpoints.character}/10');
-
-  return Character.fromJson(response.data);
-}
-
-@riverpod
 class Characters extends _$Characters {
+  int _currentPage = 1;
+  bool _isLastPage = false;
+  bool _isLoadingMore = false;
+
+  List<Character> _characters = [];
+
   @override
   Future<List<Character>> build() async {
+    return await _fetchCharacters();
+  }
+
+  Future<List<Character>> _fetchCharacters() async {
+    if (_isLastPage || _isLoadingMore) return _characters;
+
+    _isLoadingMore = true;
+
     final apiClient = ref.watch(apiClientProvider);
-
-    final response = await apiClient.get(Endpoints.character);
-
+    final response = await apiClient.get(
+      "${Endpoints.character}?page=$_currentPage",
+    );
     final List<dynamic> results = response.data["results"];
+    final newCharacters =
+        results.map((json) => Character.fromJson(json)).toList();
 
-    return results.map((json) => Character.fromJson(json)).toList();
+    _isLastPage = response.data["info"]["next"] == null;
+    _characters.addAll(newCharacters);
+    _currentPage++;
+    _isLoadingMore = false;
+
+    return _characters;
+  }
+
+  Future<void> loadMore() async {
+    state = AsyncData(await _fetchCharacters());
   }
 
   Future<void> addCharacter() async {
@@ -38,7 +53,9 @@ class Characters extends _$Characters {
 
   Future<Character> getById(String id) async {
     final apiClient = ref.watch(apiClientProvider);
+
     final response = await apiClient.get("${Endpoints.character}/$id");
+
     return Character.fromJson(response.data);
   }
 }
