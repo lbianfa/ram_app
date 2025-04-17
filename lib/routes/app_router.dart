@@ -3,6 +3,7 @@ import 'package:ram_app/models/character/character.dart';
 import 'package:ram_app/pages/character_creator_page.dart';
 import 'package:ram_app/pages/characters_page.dart';
 import 'package:ram_app/pages/character_page.dart';
+import 'package:ram_app/pages/getcharacter_page.dart';
 
 final GoRouter appRouter = GoRouter(
   routes: [
@@ -18,6 +19,14 @@ final GoRouter appRouter = GoRouter(
       builder: (context, state) {
         final character = state.extra as Character;
         return CharacterPage(character);
+      },
+    ),
+    GoRoute(
+      path: "/get-character/:id",
+      name: 'get-character',
+      builder: (context, state) {
+        final id = state.pathParameters["id"]!;
+        return GetcharacterPage(id);
       },
     ),
     GoRoute(

@@ -15,6 +15,11 @@ class CharacterCard extends StatelessWidget {
       onTap: () {
         context.pushNamed("character", extra: character);
       },
+      onDoubleTap:
+          () => context.pushNamed(
+            "get-character",
+            pathParameters: {'id': character.id.toString()},
+          ),
       child: Card(
         elevation: 4,
         clipBehavior: Clip.hardEdge,
