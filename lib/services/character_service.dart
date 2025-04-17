@@ -10,7 +10,7 @@ part 'character_service.g.dart';
 Future<Character> getCharacter(Ref ref) async {
   final apiClient = ref.watch(apiClientProvider);
 
-  final response = await apiClient.get('${Endpoints.characters}/10');
+  final response = await apiClient.get('${Endpoints.character}/10');
 
   return Character.fromJson(response.data);
 }
@@ -21,7 +21,7 @@ class Characters extends _$Characters {
   Future<List<Character>> build() async {
     final apiClient = ref.watch(apiClientProvider);
 
-    final response = await apiClient.get(Endpoints.characters);
+    final response = await apiClient.get(Endpoints.character);
 
     final List<dynamic> results = response.data["results"];
 
@@ -34,5 +34,11 @@ class Characters extends _$Characters {
     ref.invalidateSelf();
 
     await future;
+  }
+
+  Future<Character> getById(String id) async {
+    final apiClient = ref.watch(apiClientProvider);
+    final response = await apiClient.get("${Endpoints.character}/$id");
+    return Character.fromJson(response.data);
   }
 }

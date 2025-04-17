@@ -6,7 +6,7 @@ part of 'character_service.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$getCharacterHash() => r'0642c271c776db7d1a877df732792258c974e0bf';
+String _$getCharacterHash() => r'f419cde25bd9970940a6b87b5b7ccbf56ddd0f00';
 
 /// See also [getCharacter].
 @ProviderFor(getCharacter)
@@ -22,7 +22,7 @@ final getCharacterProvider = AutoDisposeFutureProvider<Character>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef GetCharacterRef = AutoDisposeFutureProviderRef<Character>;
-String _$charactersHash() => r'5d2f42909a59cacfb427fcfc811b1be9c18926d0';
+String _$charactersHash() => r'c4ebed1e7fb9e2079426375531b43ea7dde71409';
 
 /// See also [Characters].
 @ProviderFor(Characters)
