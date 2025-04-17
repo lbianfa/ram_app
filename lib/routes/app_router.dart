@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:ram_app/models/character/character.dart';
 import 'package:ram_app/pages/character_creator_page.dart';
 import 'package:ram_app/pages/characters_page.dart';
 import 'package:ram_app/pages/character_page.dart';
@@ -14,7 +15,10 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: "/character",
       name: 'character',
-      builder: (context, state) => const CharacterPage(),
+      builder: (context, state) {
+        final character = state.extra as Character;
+        return CharacterPage(character);
+      },
     ),
     GoRoute(
       path: "/create-character",
