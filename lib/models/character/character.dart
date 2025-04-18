@@ -13,6 +13,7 @@ sealed class Character with _$Character {
     required String type,
     required String gender,
     required String image,
+    required Map<String, dynamic> origin,
     required LocationInfo location,
   }) = _Character;
 

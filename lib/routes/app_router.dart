@@ -17,7 +17,11 @@ final GoRouter appRouter = GoRouter(
       path: "/character",
       name: 'character',
       builder: (context, state) {
-        final character = state.extra as Character;
+        final data = state.extra;
+        final character =
+            data is Character
+                ? data
+                : Character.fromJson(data as Map<String, dynamic>);
         return CharacterPage(character);
       },
     ),
