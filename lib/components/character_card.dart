@@ -28,7 +28,13 @@ class CharacterCard extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.network(character.image, width: 170),
+            Image.network(
+              character.image,
+              width: 170,
+              errorBuilder: (_, _, _) {
+                return Image.asset("assets/placeholder.jpeg", width: 170);
+              },
+            ),
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(10, 15, 10, 10),
