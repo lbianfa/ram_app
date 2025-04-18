@@ -58,7 +58,7 @@ class _CharacterCreatorState extends ConsumerState<CharacterCreatorPage> {
                 ElevatedButton(
                   onPressed: () {
                     final future =
-                        ref.read(charactersProvider.notifier).addCharacter();
+                        ref.read(charactersProvider().notifier).addCharacter();
 
                     setState(() {
                       _pendingAddCharacter = future;

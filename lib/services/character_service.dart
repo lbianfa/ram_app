@@ -10,11 +10,13 @@ class Characters extends _$Characters {
   int _currentPage = 1;
   bool _isLastPage = false;
   bool _isLoadingMore = false;
+  String _searchValue = "";
 
-  List<Character> _characters = [];
+  final List<Character> _characters = [];
 
   @override
-  Future<List<Character>> build() async {
+  Future<List<Character>> build({String searchValue = ""}) async {
+    _searchValue = searchValue;
     return await _fetchCharacters();
   }
 
@@ -25,7 +27,7 @@ class Characters extends _$Characters {
 
     final apiClient = ref.watch(apiClientProvider);
     final response = await apiClient.get(
-      "${Endpoints.character}?page=$_currentPage",
+      "${Endpoints.character}?page=$_currentPage&name=$_searchValue",
     );
     final List<dynamic> results = response.data["results"];
     final newCharacters =

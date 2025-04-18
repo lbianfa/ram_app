@@ -11,7 +11,7 @@ class GetcharacterPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final Future<Character> character = ref
-        .read(charactersProvider.notifier)
+        .read(charactersProvider().notifier)
         .getById(characterId);
 
     return Scaffold(

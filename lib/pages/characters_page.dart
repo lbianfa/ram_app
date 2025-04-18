@@ -16,8 +16,10 @@ class CharactersPage extends ConsumerStatefulWidget {
 }
 
 class _CharactersPageState extends ConsumerState<CharactersPage> {
+  final _searchController = TextEditingController();
   final _scrollController = ScrollController();
   bool _isLoading = false;
+  String searchValue = "";
 
   @override
   void initState() {
@@ -34,7 +36,7 @@ class _CharactersPageState extends ConsumerState<CharactersPage> {
   @override
   Widget build(BuildContext context) {
     final AsyncValue<List<Character>> characters = ref.watch(
-      charactersProvider,
+      charactersProvider(searchValue: searchValue),
     );
 
     return Scaffold(
@@ -45,6 +47,14 @@ class _CharactersPageState extends ConsumerState<CharactersPage> {
           child: Image.asset("assets/logo.png", fit: BoxFit.contain),
         ),
         title: Text("Rick & Morty"),
+        actions: [
+          IconButton(
+            onPressed: () {
+              _showMyDialog();
+            },
+            icon: Icon(Icons.search),
+          ),
+        ],
       ),
       backgroundColor: Theme.of(context).colorScheme.primary,
       body: switch (characters) {
@@ -94,11 +104,54 @@ class _CharactersPageState extends ConsumerState<CharactersPage> {
         _isLoading = true;
       });
 
-      await ref.read(charactersProvider.notifier).loadMore();
+      await ref.read(charactersProvider().notifier).loadMore();
 
       setState(() {
         _isLoading = false;
       });
+    }
+  }
+
+  Future<void> _showMyDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Buscar personaje'),
+          content: TextField(
+            controller: _searchController,
+            decoration: InputDecoration(
+              hintText: "Escribe un nombre...",
+              border: OutlineInputBorder(),
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                _onDialogClose();
+              },
+              child: const Text('Cancelar'),
+            ),
+            TextButton(
+              onPressed: () {
+                setState(() {
+                  searchValue = _searchController.value.text;
+                });
+                _onDialogClose();
+              },
+              child: const Text('Buscar'),
+            ),
+          ],
+        );
+      },
+    ).then((_) => _onDialogClose());
+  }
+
+  void _onDialogClose() {
+    _searchController.clear();
+    if (context.canPop()) {
+      Navigator.of(context).pop();
     }
   }
 }
