@@ -59,6 +59,7 @@ dev_dependencies:
   riverpod_lint: ^2.6.5
   json_serializable: ^6.9.4
   flutter_launcher_icons: ^0.14.3
+  flutter_native_splash: ^2.4.6
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -107,3 +108,11 @@ flutter_launcher_icons:
   android: true
   ios: true
   image_path: "assets/logo.png"
+
+flutter_native_splash:
+  color: "#ffffff" # Fondo (o usa image_dark si es oscuro)
+  image: assets/logo.png
+  android: true
+  ios: true
+  android_gravity: center
+  ios_content_mode: center
