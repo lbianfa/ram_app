@@ -40,6 +40,10 @@ class _CharactersPageState extends ConsumerState<CharactersPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 8),
+          child: Image.asset("assets/logo.png", fit: BoxFit.contain),
+        ),
         title: Text("Rick & Morty"),
       ),
       backgroundColor: Theme.of(context).colorScheme.primary,

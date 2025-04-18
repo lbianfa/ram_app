@@ -19,7 +19,20 @@ class _CharacterCreatorState extends ConsumerState<CharacterCreatorPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text("Crear personaje"),
+        leadingWidth: 28,
+        title: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 1),
+              child: Image.asset(
+                'assets/logo.png',
+                fit: BoxFit.contain,
+                width: 45,
+              ),
+            ),
+            Text("Crear personaje"),
+          ],
+        ),
       ),
       backgroundColor: Theme.of(context).colorScheme.primary,
       body: FutureBuilder(

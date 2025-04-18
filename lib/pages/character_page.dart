@@ -13,7 +13,20 @@ class CharacterPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text("Personaje ${c.id}"),
+        leadingWidth: 28,
+        title: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 1),
+              child: Image.asset(
+                'assets/logo.png',
+                fit: BoxFit.contain,
+                width: 45,
+              ),
+            ),
+            Text("Personaje ${c.id}"),
+          ],
+        ),
       ),
       backgroundColor: Theme.of(context).colorScheme.primary,
       body: SingleChildScrollView(
