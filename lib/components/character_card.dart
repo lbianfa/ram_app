@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ram_app/models/character/character.dart';
+import 'package:shimmer/shimmer.dart';
 
 class CharacterCard extends StatelessWidget {
   final Character character;
@@ -33,6 +34,19 @@ class CharacterCard extends StatelessWidget {
               width: 170,
               errorBuilder: (_, _, _) {
                 return Image.asset("assets/placeholder.jpeg", width: 170);
+              },
+              loadingBuilder: (_, child, loadingProgress) {
+                if (loadingProgress == null) return child;
+
+                return Shimmer.fromColors(
+                  baseColor: Color.fromARGB(255, 51, 59, 83),
+                  highlightColor: Color.fromARGB(255, 46, 51, 64),
+                  child: Container(
+                    width: 170,
+                    height: 170,
+                    color: Colors.blueGrey,
+                  ),
+                );
               },
             ),
             Expanded(
